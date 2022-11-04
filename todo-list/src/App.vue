@@ -1,47 +1,20 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import TodoForm from "@/components/TodoForm.vue";
+import TodoList from "@/components/TodoList.vue";
+import { storeToRefs } from "pinia";
+import { useTodosStore } from "./stores/todos";
+
+const store = useTodosStore();
+const { todosDone, todosUndone } = storeToRefs(store);
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <TodoForm />
+  <h1>Todo</h1>
+  <TodoList :todos="todosUndone" />
+  <h1>Done</h1>
+  <TodoList :todos="todosDone" />
+  <p v-if="todosUndone.length === 0 && todosDone.length != 0">
+    Congratulations! You finished all tasks!
+  </p>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
