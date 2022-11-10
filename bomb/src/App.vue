@@ -23,6 +23,7 @@ const stop = () => {
 }
 
 const reset = () => {
+  stop();
   time.value = initialTime;
   message.value = initialMessage;
 }
