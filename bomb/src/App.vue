@@ -31,9 +31,11 @@ const reset = () => {
 
 <template>
   <p>Set Time : {{ settingTime }}</p>
-  <button type="button" @click="start">start</button>
-  <button type="button" @click="stop">stop</button>
-  <button type="button" @click="reset">reset</button>
+  <div>
+    <button type="button" @click="start">start</button>
+    <button type="button" @click="stop">stop</button>
+    <button type="button" @click="reset">reset</button>
+  </div>
   <div class="circle">
     <p>
       {{ time }}
