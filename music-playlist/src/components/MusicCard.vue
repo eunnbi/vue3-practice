@@ -25,7 +25,7 @@ const modal = ref<{
 const showDeletionModal = () => {
   modal.value = {
     type: "DELETE",
-    content: "정말 노래를 지울까요",
+    content: "정말 노래를 지울까요?",
   };
 };
 
@@ -73,7 +73,7 @@ const onConfirmAddingPlaylist = (id: Music["id"]) => {
   <CheckingModal
     :music-title="title"
     :content="modal.content"
-    @confirm="onConfirmAddingPlaylist"
+    @confirm="onConfirmAddingPlaylist(id)"
     @cancel="closeModal"
     v-if="modal.type === 'PLAYLIST'"
   />
