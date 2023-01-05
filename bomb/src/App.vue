@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from "vue";
+import Bomb from "./Bomb.vue";
 
 const settingTime = 5;
 const initialMessage = "Ready to bomb😊";
@@ -11,22 +12,24 @@ let timerId: number;
 const start = () => {
   timerId = setInterval(() => {
     time.value++;
-    if (time.value == settingTime) {
-      message.value = "Baaaaaaaaamm😱";
-      clearInterval(timerId);
-    }
   }, 1000);
-}
+};
 
 const stop = () => {
   clearInterval(timerId);
-}
+};
 
 const reset = () => {
   stop();
   time.value = initialTime;
   message.value = initialMessage;
-}
+};
+watch(time, (newTime) => {
+  if (newTime === settingTime) {
+    stop();
+    message.value = "Baaaaaaaaamm😱";
+  }
+});
 </script>
 
 <template>
@@ -36,25 +39,6 @@ const reset = () => {
     <button type="button" @click="stop">stop</button>
     <button type="button" @click="reset">reset</button>
   </div>
-  <div class="circle">
-    <p>
-      {{ time }}
-    </p>
-  </div>
+  <Bomb :time="time" />
   <p>{{ message }}</p>
 </template>
-
-<style scoped>
-.circle {
-    background-color: black;
-    color: white;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    margin-top: 20px;
-  }
-</style>
