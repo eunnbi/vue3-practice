@@ -11,7 +11,9 @@ defineProps<{
   artist: Music["artist"];
   id: Music["id"];
 }>();
+
 const { changePlayingStatus, removeMusic } = usePlaylistStore();
+
 const modal = ref<{
   type: ModalType;
   content: string;
@@ -19,18 +21,21 @@ const modal = ref<{
   type: "",
   content: "",
 });
+
 const showDeletionModal = () => {
   modal.value = {
     type: "DELETE",
     content: "정말 노래를 지울까요",
   };
 };
+
 const showAddingPlaylistModal = () => {
   modal.value = {
     type: "PLAYLIST",
     content: "정말 재생목록에 추가할건가요?",
   };
 };
+
 const closeModal = () => {
   modal.value = {
     type: "",
@@ -68,7 +73,7 @@ const onConfirmAddingPlaylist = (id: Music["id"]) => {
   <CheckingModal
     :music-title="title"
     :content="modal.content"
-    @confirm="onConfirmAddingPlaylist(id)"
+    @confirm="onConfirmAddingPlaylist"
     @cancel="closeModal"
     v-if="modal.type === 'PLAYLIST'"
   />

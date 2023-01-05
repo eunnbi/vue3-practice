@@ -1,47 +1,47 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { storeToRefs } from "pinia";
+import { ref } from "vue";
+import MusicCard from "./components/MusicCard.vue";
+import MusicForm from "./components/MusicForm.vue";
+import { usePlaylistStore } from "./stores/playlist";
+
+const store = usePlaylistStore();
+const { playingList, musicList } = storeToRefs(store);
+const open = ref(false);
+const showForm = () => (open.value = true);
+const hideForm = () => (open.value = false);
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
   <main>
-    <TheWelcome />
+    <h1>
+      재생목록: [<span
+        v-for="{ title } in playingList"
+        v-if="playingList.length !== 0"
+        >"{{ title }}"</span
+      >]
+    </h1>
+    <section>
+      <MusicCard
+        v-for="{ id, title, artist } in musicList"
+        :title="title"
+        :artist="artist"
+        :id="id"
+      />
+      <button type="button" @click="showForm">+ 새음악</button>
+    </section>
   </main>
+  <MusicForm @hide-form="hideForm" v-if="open" />
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+h1 {
+  font-weight: bold;
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 </style>
