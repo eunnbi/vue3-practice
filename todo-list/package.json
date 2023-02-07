@@ -2,6 +2,7 @@
   "name": "todo-list",
   "version": "0.0.0",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "dev": "vite",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
